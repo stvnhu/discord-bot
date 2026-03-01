@@ -1,4 +1,6 @@
 
+## Deprecated after gpt-4o-mini was retired
+
 import re
 from pathlib import Path
 from dotenv import dotenv_values

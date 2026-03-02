@@ -40,7 +40,7 @@ python3 src/main.py
 
 - pathlib
 - dotenv
-- discord
+- discord.py
 - re
 - openai
 - base64

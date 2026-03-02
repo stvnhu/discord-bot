@@ -29,7 +29,7 @@ class Youtube(commands.Cog):
         await interaction.response.defer(ephemeral=True)
 
         if not interaction.user.voice:
-            await interaction.followup.send("You are not in a voice channel.")
+            await interaction.followup.send("You are not in a voice channel.", ephemeral=True)
 
         voiceChannel = interaction.user.voice.channel
         voiceClient = interaction.guild.voice_client
@@ -40,9 +40,10 @@ class Youtube(commands.Cog):
             elif voiceClient.channel != voiceChannel:
                 await voiceClient.move_to(voiceChannel)
         except Exception as e:
-            await interaction.followup.send("Failed to join voice channel: {e}.")
+            await interaction.followup.send("Failed to join voice channel: {e}.", ephemeral=True)
+            return
 
-        await interaction.followup.send(f"Joined {voiceChannel}.")
+        await interaction.followup.send(f"Joined {voiceChannel}.", ephemeral=True)
 
     @yt.command(name="play", description="Play a youtube link.")
     async def ytPlay(self, interaction, url: str):
@@ -55,14 +56,15 @@ class Youtube(commands.Cog):
                 voice_client = interaction.guild.voice_client
                 voice_client.play(audio)
         except Exception as e:
-            await interaction.followup.send(f"Error playing audio: {e}.")
+            await interaction.followup.send(f"Error playing audio: {e}.", ephemeral=True)
+            return
         await interaction.followup.send(f"Now playing: {url}.")
 
     @yt.command(name="leave", description="Make the bot leave the voice channel.")
     async def leave(self, interaction):
         await interaction.response.defer(ephemeral=True)
         await interaction.guild.voice_client.disconnect()
-        await interaction.followup.send("Voice channel left.")
+        await interaction.followup.send("Voice channel left.", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Youtube(bot))
